@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Expense Tracker</h1>
+        <form id="expense-form">
+            <input type="text" id="description" placeholder="Description" required>
+            <input type="number" id="amount" step="0.01" placeholder="Amount" required>
+            <input type="date" id="date" required>
+            <select id="type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+            </select>
+            <button type="submit">Add Transaction</button>
+        </form>
+
+        <h2>Transactions</h2>
+        <ul id="transaction-list">
+            <?php foreach ($transactions as $transaction): ?>
+                <li data-id="<?php echo $transaction['id']; ?>">
+                    <?php echo htmlspecialchars($transaction['description']); ?> - 
+                    $<?php echo number_format($transaction['amount'], 2); ?> - 
+                    <?php echo date('m/d/Y', strtotime($transaction['date'])); ?> - 
+                    <?php echo ucfirst($transaction['type']); ?>
+                    <button class="delete-btn">Delete</button>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <h3>Totals:</h3>
+        <p>Income: $<span id="income-amount"><?php echo number_format($incomeTotal, 2); ?></span></p>
+        <p>Expenses: $<span id="expense-amount"><?php echo number_format($expenseTotal, 2); ?></span></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
